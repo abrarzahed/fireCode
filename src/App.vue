@@ -225,4 +225,8 @@ button,
   padding-left: 50px;
   border-left: 8px solid #48a07a;
 }
+.green-btn {
+  background: #66d1a2;
+  color: #fff;
+}
 </style>

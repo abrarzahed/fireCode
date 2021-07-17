@@ -25,7 +25,7 @@
     <div v-if="!user" class="updates">
       <div class="container">
         <h2>Never miss a post. Ragister for your free account today</h2>
-        <router-link class="router-button" :to="{ name: 'Login' }">
+        <router-link class="router-button green-btn" :to="{ name: 'Login' }">
           Ragister Now <Arrow class="arrow arrow-light"></Arrow>
         </router-link>
       </div>
