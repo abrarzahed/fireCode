@@ -85,7 +85,7 @@ export default {
   }
 }
 .updates {
-  background: #66d1a2;
+  background: #000;
   color: #fff;
   .container {
     max-width: 760px;
