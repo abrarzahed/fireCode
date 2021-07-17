@@ -25,7 +25,7 @@
     <div v-if="!user" class="updates">
       <div class="container">
         <h2>Never miss a post. Ragister for your free account today</h2>
-        <router-link class="router-button" to="#">
+        <router-link class="router-button" :to="{ name: 'Login' }">
           Ragister Now <Arrow class="arrow arrow-light"></Arrow>
         </router-link>
       </div>
@@ -85,7 +85,8 @@ export default {
   }
 }
 .updates {
-  background: #fff;
+  background: #66d1a2;
+  color: #fff;
   .container {
     max-width: 760px;
     padding: 80px 25px;
