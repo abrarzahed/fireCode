@@ -4,7 +4,7 @@
       <div class="left">
         <div class="col-1">
           <router-link class="header" :to="{ name: 'Home' }"
-            >FireBlog</router-link
+            >FireCode</router-link
           >
           <ul>
             <li>
@@ -39,10 +39,10 @@
       </div>
       <div class="right">
         <p>
-          Lorem ipsum dolor sit amet consectetur adipiscing, elit phasellus
-          bibendum praesent quisque velit
+          Copyright &copy; 2021 All rights reserved
         </p>
-        <span>Copyright 2021 All Rights Reserved</span>
+        <span>abrarzahed6986@gmail.com</span>
+        <span>+8801887877854</span>
       </div>
     </div>
   </footer>
@@ -75,7 +75,7 @@ export default {
 footer {
   margin-top: auto;
   padding: 50px 25px;
-  background-color: #303030;
+  background-color: #202020;
   .container {
     display: flex;
     flex-direction: column;
@@ -100,12 +100,13 @@ footer {
         gap: 0;
       }
       .header {
+        font-family: "Qahiri", sans-serif;
         text-align: center;
-        font-size: 24px;
+        font-size: 12vmin;
         color: #fff;
         margin-bottom: 16px;
         text-decoration: none;
-        font-weight: 600;
+        font-weight: 200;
         @media (min-width: 800px) {
           text-align: initial;
         }

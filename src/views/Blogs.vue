@@ -1,31 +1,61 @@
 <template>
   <div class="blog-card-wrap">
     <div class="blog-cards container">
-      <div class="toggle-edit">
-        <span>Toggle Editing Post</span>
-        <input type="checkbox" v-model="editPost" />
+      <div v-if="user" class="toggle-edit">
+        <div v-if="!showEdit" class="admin">
+          <input
+            :class="{ errAdmin: error }"
+            v-model="inputAdmin"
+            type="password"
+            placeholder="Enter admin password"
+          />
+          <button @click="passAdmin">Submit</button>
+        </div>
+        <div class="tgl" v-if="showEdit">
+          <span>Toggle Editing Post</span>
+          <input type="checkbox" v-model="editPost" />
+        </div>
       </div>
 
-      <BlogCards
+      <BlogCard
         :post="post"
-        v-for="(post, index) in simpleBlogCards"
+        v-for="(post, index) in blogPosts"
         :key="index"
-      ></BlogCards>
+      ></BlogCard>
     </div>
   </div>
 </template>
 
 <script>
-import BlogCards from "@/components/BlogCards.vue";
+import BlogCard from "@/components/BlogCard.vue";
 export default {
   name: "blogs",
-  components: { BlogCards },
+  components: { BlogCard },
   data() {
-    return {};
+    return {
+      adminCurrectPassword: "min",
+      showEdit: false,
+      inputAdmin: "",
+      error: false,
+    };
   },
+  methods: {
+    passAdmin() {
+      if (this.inputAdmin == this.adminCurrectPassword) {
+        this.showEdit = !this.showEdit;
+        return;
+      }
+      this.error = !this.error;
+      return;
+    },
+  },
+
   computed: {
-    simpleBlogCards() {
-      return this.$store.state.simpleBlogCards;
+    user() {
+      return this.$store.state.user;
+    },
+    blogPosts() {
+      return this.$store.state.blogPosts;
     },
     editPost: {
       get() {
@@ -49,11 +79,12 @@ export default {
     display: flex;
     align-items: center;
     position: absolute;
-    top: -70px;
-    right: 0;
+    top: -50px;
+    right: -10px;
     span {
       margin-right: 16px;
     }
+
     input[type="checkbox"] {
       position: relative;
       border: none;
@@ -64,7 +95,7 @@ export default {
       height: 30px;
       border-radius: 20px;
       box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
-        0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        0 2px 4px -1px rgba(46, 45, 45, 0.06);
       cursor: pointer;
     }
     input[type="checkbox"]:before {

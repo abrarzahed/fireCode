@@ -1,6 +1,7 @@
 <template>
   <div class="app-wrapper">
-    <div class="app">
+    <Loading v-if="loading"></Loading>
+    <div class="app" v-if="this.$store.state.postLoaded">
       <Navigation v-if="navigation"></Navigation>
       <router-view />
       <Footer v-if="navigation"></Footer>
@@ -11,22 +12,40 @@
 <script>
 import Navigation from "./components/Navigation";
 import Footer from "./components/Footer";
+import firebase from "firebase/app";
+import "firebase/auth";
+import Loading from "@/components/Loading.vue";
 
 export default {
   name: "app",
   components: {
     Navigation,
     Footer,
+    Loading,
   },
   data() {
     return {
       navigation: null,
+      loading: true,
     };
   },
   created() {
+    firebase.auth().onAuthStateChanged((user) => {
+      this.$store.commit("updateUser", user);
+      if (user) {
+        this.$store.dispatch("getCurrentUser");
+      }
+    });
     this.checkRoute();
+    this.$store.dispatch("getPost");
   },
-  mounted() {},
+  beforeCreate() {
+    // console.log("HI");
+  },
+
+  mounted() {
+    this.loading = false;
+  },
   methods: {
     checkRoute() {
       if (
@@ -50,7 +69,7 @@ export default {
 
 <style lang="scss">
 @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap");
-
+@import url("https://fonts.googleapis.com/css2?family=Qahiri&display=swap");
 * {
   margin: 0;
   padding: 0;
@@ -167,5 +186,43 @@ button,
       grid-template-columns: repeat(4, 1fr);
     }
   }
+}
+.admin {
+  display: flex;
+  // margin-left: 30px;
+  height: 20px;
+  align-items: center;
+  justify-content: center;
+  gap: -20px;
+
+  input {
+    padding: 10px;
+    min-width: 200px;
+    border-radius: 20px;
+    border: 1px solid transparent;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+      0 2px 4px -1px rgba(46, 45, 45, 0.06);
+    margin-left: 40px;
+
+    &:focus {
+      outline: none;
+      border: 1px solid #66d1a2;
+    }
+  }
+  .errAdmin {
+    border: 1px solid crimson !important;
+  }
+}
+.tgl {
+  display: flex;
+  align-items: center;
+}
+.project-link {
+  margin-left: 12px;
+  color: #66d1a2;
+}
+.p-border {
+  padding-left: 50px;
+  border-left: 8px solid #48a07a;
 }
 </style>

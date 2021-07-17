@@ -3,7 +3,7 @@
     <BlogPost :post="welcomeScreen"></BlogPost>
     <BlogPost
       :post="post"
-      v-for="(post, index) in simpleBlogPost"
+      v-for="(post, index) in blogPostsFeed"
       :key="index"
     ></BlogPost>
 
@@ -12,17 +12,17 @@
       <div class="container">
         <h3>View More Recent Blogs</h3>
         <div class="blog-cards">
-          <BlogCards
+          <BlogCard
             :post="post"
-            v-for="(post, index) in simpleBlogCards"
+            v-for="(post, index) in blogPostsCards"
             :key="index"
-          ></BlogCards>
+          ></BlogCard>
         </div>
       </div>
     </div>
 
     <!-- Call to action -->
-    <div class="updates">
+    <div v-if="!user" class="updates">
       <div class="container">
         <h2>Never miss a post. Ragister for your free account today</h2>
         <router-link class="router-button" to="#">
@@ -30,47 +30,48 @@
         </router-link>
       </div>
     </div>
+
+    <ProjectCard :projects="projects"></ProjectCard>
   </div>
 </template>
 
 <script>
 import BlogPost from "@/components/BlogPost.vue";
-import BlogCards from "@/components/BlogCards.vue";
+import BlogCard from "@/components/BlogCard.vue";
+import ProjectCard from "@/components/ProjectCard.vue";
 import Arrow from "../assets/Icons/arrow-right-light.svg";
 
 export default {
   name: "Home",
   components: {
     BlogPost,
-    BlogCards,
+    BlogCard,
     Arrow,
+    ProjectCard,
   },
   data() {
     return {
       welcomeScreen: {
-        title: "Welcome!",
+        title: "Abrar Hussen Zahed",
         blogPost:
-          "Weekly blog articles with all things programming including HTML, CSS, JavaScript and more. Register today to never miss a post!",
+          "I am a front-end web developer. I have made this blog website as a portfolio. And this is open for all to write blog articles about programming including HTML, CSS, JavaScript and more. So to publish your first article Register now ✒📝",
         welcomeScreen: true,
-        photo: "coding",
+        photo: "code",
       },
-      simpleBlogPost: [
-        {
-          title: "This is a filter title",
-          blogHTML: "This is a filter blog post title",
-          blogCoverPhoto: "beautiful-stories",
-        },
-        {
-          title: "This is a filter title",
-          blogHTML: "This is a filter blog post title",
-          blogCoverPhoto: "designed-for-everyone",
-        },
-      ],
     };
   },
   computed: {
-    simpleBlogCards() {
-      return this.$store.state.simpleBlogCards;
+    blogPostsFeed() {
+      return this.$store.getters.blogPostsFeed;
+    },
+    blogPostsCards() {
+      return this.$store.getters.blogPostsCards;
+    },
+    user() {
+      return this.$store.state.user;
+    },
+    projects() {
+      return this.$store.state.projects.slice(0, 4);
     },
   },
 };
@@ -84,7 +85,7 @@ export default {
   }
 }
 .updates {
-  background: #f7f1e3;
+  background: #fff;
   .container {
     max-width: 760px;
     padding: 80px 25px;

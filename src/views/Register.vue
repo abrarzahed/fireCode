@@ -8,7 +8,7 @@
             >Login</router-link
           >
         </p>
-        <h2>Create Your Fireblog account</h2>
+        <h2>Create Your FireCode account</h2>
         <div class="inputs">
           <div class="input">
             <input type="text" placeholder="First name" v-model="firstName" />
@@ -31,7 +31,7 @@
             <input type="password" placeholder="Password" v-model="password" />
             <Password class="icon"></Password>
           </div>
-          <div v-show="error" class="error">{{ this.errorMessage }}</div>
+          <div v-show="error" class="error">{{ this.errorMsg }}</div>
         </div>
 
         <button @click.prevent="register">Sign Up</button>
@@ -50,7 +50,7 @@ import firebase from "firebase/app";
 import "firebase/auth";
 import db from "../firebase/firebaseInit";
 export default {
-  name: "Register",
+  name: "register",
   components: {
     email,
     password,

@@ -3,14 +3,31 @@
     <div class="blog-content">
       <div>
         <h2 v-if="post.welcomeScreen">{{ post.title }}</h2>
-        <h2 v-else>{{ post.title }}</h2>
-        <p v-if="post.welcomeScreen">{{ post.blogPost }}</p>
-        <p class="content-preview" v-else>{{ post.blogHTML }}</p>
-        <router-link class="link link-light" v-if="post.welcomeScreen" to="#">
+        <h2 v-else>{{ post.blogTitle }}</h2>
+        <p class="p-border" v-if="post.welcomeScreen">{{ post.blogPost }}</p>
+        <p class="content-preview" v-else v-html="post.blogHTML"></p>
+
+        <router-link
+          class="link link-light"
+          v-if="post.welcomeScreen"
+          :to="{ name: 'Login' }"
+        >
           Login/Register<Arrow class="arrow arrow-light" />
         </router-link>
 
-        <router-link class="link" v-else to="#">
+        <router-link
+          class="link link-light project-link"
+          v-if="post.welcomeScreen"
+          :to="{ name: 'Projects' }"
+        >
+          More Projects<Arrow class="arrow arrow-light" />
+        </router-link>
+
+        <router-link
+          class="link"
+          v-else
+          :to="{ name: 'ViewBlog', params: { blogid: this.post.blogID } }"
+        >
           Read More<Arrow class="arrow" />
         </router-link>
       </div>
@@ -18,14 +35,10 @@
     <div class="blog-photo">
       <img
         v-if="post.welcomeScreen"
-        :src="require(`../assets/blogPhotos/${post.photo}.jpg`)"
+        :src="require(`../assets/blogPhotos/${post.photo}.png`)"
         alt=""
       />
-      <img
-        v-else
-        :src="require(`../assets/blogPhotos/${post.blogCoverPhoto}.jpg`)"
-        alt=""
-      />
+      <img v-else :src="post.blogCoverPhoto" alt="" />
     </div>
   </div>
 </template>
@@ -38,6 +51,12 @@ export default {
     Arrow,
   },
   props: ["post"],
+
+  computed: {
+    user() {
+      return this.Store.state.user;
+    },
+  },
 };
 </script>
 
@@ -66,7 +85,7 @@ export default {
       flex: 3;
     }
     div {
-      max-width: 375px;
+      max-width: 475px;
       padding: 72px 24px;
       @media (min-width: 700px) {
         padding: 0 24px;
@@ -76,9 +95,9 @@ export default {
         font-weight: 300;
         text-transform: uppercase;
         margin-bottom: 24px;
-        @media (min-width: 700px) {
-          font-size: 40px;
-        }
+        // @media (min-width: 700px) {
+        //   font-size: 40px;
+        // }
       }
       p {
         font-size: 15px;
@@ -87,8 +106,8 @@ export default {
       }
       .content-preview {
         font-size: 13px;
-        max-height: 24px;
-        width: 250px;
+        max-height: 44px;
+        max-width: 300px;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -140,8 +159,16 @@ export default {
 }
 .no-user:first-child {
   .blog-content {
-    background-color: #303030;
+    background-color: #202020;
     color: #fff;
+    h2 {
+      font-weight: 500;
+      text-transform: capitalize;
+      color: #66d1a2;
+      @media (min-width: 700px) {
+        font-size: 32px;
+      }
+    }
   }
 }
 </style>
